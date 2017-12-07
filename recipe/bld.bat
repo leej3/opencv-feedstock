@@ -1,18 +1,6 @@
 @echo ON
 setlocal enabledelayedexpansion
 
-curl -L -O "https://github.com/opencv/opencv_contrib/archive/%PKG_VERSION%.tar.gz"
-%PYTHON% -c "import tarfile, os; tar = tarfile.open(os.environ['PKG_VERSION'] + '.tar.gz', 'r:gz'); tar.extractall(); tar.close()"
-%PYTHON% -c "import hashlib, os; print(hashlib.sha256(open(os.environ['PKG_VERSION'] + '.tar.gz', 'rb').read()).hexdigest())" > sha256.out
-SET /p CONTRIB_SHA256=<sha256.out
-<<<<<<< HEAD
-if NOT "%CONTRIB_SHA256%" == "298c69ee006d7675e1ff9d371ba8b0d9e7e88374bb7ba0f9d0789851d352ec6e" (
-=======
-if NOT "%CONTRIB_SHA256%" == "1e2bb6c9a41c602904cc7df3f8fb8f98363a88ea564f2a087240483426bf8cbe" (
->>>>>>> update recipe for use with conda-build 3
-    exit 1
-)
-
 rem Patches apply only to opencv_contrib so we have to apply them now (after source download above)
 rem Fixed: https://github.com/opencv/opencv_contrib/blob/6cd8e9f556c8c55c05178dec05d5277ae00020d9/modules/tracking/src/trackerKCF.cpp#L669
 git apply --whitespace=fix -p0 "%RECIPE_DIR%\kcftracker.patch"

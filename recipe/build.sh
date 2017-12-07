@@ -16,13 +16,7 @@ if [ "${SHORT_OS_STR}" == "Darwin" ]; then
     CMAKE_OSX_DEPLOYMENT_TARGET="-DCMAKE_OSX_DEPLOYMENT_TARGET="
 fi
 
-<<<<<<< HEAD
-curl -L -O "https://github.com/opencv/opencv_contrib/archive/$PKG_VERSION.tar.gz"
-test `openssl sha256 $PKG_VERSION.tar.gz | awk '{print $2}'` = "298c69ee006d7675e1ff9d371ba8b0d9e7e88374bb7ba0f9d0789851d352ec6e"
-tar -zxf $PKG_VERSION.tar.gz
-=======
 INC_PYTHON="${PREFIX}/include/python${PY_VER}"
->>>>>>> update recipe for use with conda-build 3
 
 mkdir build
 cd build
@@ -44,13 +38,9 @@ fi
 
 cmake .. -LAH                                                             \
     -DCMAKE_BUILD_TYPE="Release"                                          \
-<<<<<<< HEAD
     -DCMAKE_PREFIX_PATH=${PREFIX}                                         \
     -DCMAKE_INSTALL_PREFIX=${PREFIX}                                      \
     -DCMAKE_INSTALL_LIBDIR="lib"                                          \
-=======
-    -DCMAKE_INSTALL_PREFIX=$PREFIX                                        \
->>>>>>> update recipe for use with conda-build 3
     $OPENMP                                                               \
     -DWITH_EIGEN=1                                                        \
     -DBUILD_TESTS=0                                                       \
