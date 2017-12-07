@@ -15,9 +15,9 @@ source:
 
 
 build:
-  number: 0
-  # TODO Windows build of opencv
-  skip: True  # [win]
+  number: 1
+  # Python 2.7 is not supported on Windows
+  skip: True  # [win and py27]
   run_exports:
     # pin to exact version
     # https://abi-laboratory.pro/tracker/timeline/opencv/
@@ -42,11 +42,11 @@ requirements:
     - zlib
     - jpeg
     - libtiff
-    - harfbuzz
+    - harfbuzz              # [not win]
     - libpng
-    - ffmpeg
+    - ffmpeg                # [not win]
     - msinttypes            # [win and py<35]
-    - libprotobuf
+    - libprotobuf           # [not win]
     - git                   # [not win]
 
   run:
@@ -110,7 +110,7 @@ test:
         - test -f $PREFIX/lib/libopencv_{{ each_opencv_lib }}${SHLIB_EXT}                  # [unix]
         - if not exist %PREFIX%\\Library\\bin\\opencv_{{ each_opencv_lib }}{{ win_ver_lib }}.dll exit 1  # [win]
         {% endfor %}
-        - conda inspect linkages -p $PREFIX opencv
+        - conda inspect linkages -p $PREFIX opencv  # [not win]
 
 about:
   home: http://opencv.org/
