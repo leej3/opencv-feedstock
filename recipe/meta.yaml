@@ -63,6 +63,7 @@ outputs:
 
   - name: py-opencv
     script: install-py-opencv.sh
+    # script: install-py-opencv.bat
     build:
       run_exports:
         # more liberal that libopencv
@@ -85,6 +86,7 @@ outputs:
       # - git
         - m2-filesystem         # [win]
         - m2w64-pkg-config      # [win]
+        - m2-base               # [win]
         - pkg-config            # [not win]
         - jom                   # [win]
         - cmake
@@ -117,7 +119,8 @@ outputs:
         - cv2.xfeatures2d
 
   - name: libopencv
-    script: install-libopencv.sh
+    script: install-libopencv.sh   # [unix]
+    script: install-libopencv.bat  # [win]
     build:
       run_exports:
         # pin to exact version
