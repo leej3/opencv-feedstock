@@ -31,9 +31,11 @@ set U_LIBRARY_BIN=%LIBRARY_BIN:\=/%
 set U_SP_DIR=%SP_DIR:\=/%
 set U_SRC_DIR=%SRC_DIR:\=/%
 
+:: On Windows, CMake links directly to the prefix and it also links directly to the prefix
+:: without the OpenCV_INSTALL_BINARIES_PREFIX appended.
 cmake .. -LAH -G "NMake Makefiles JOM"                                              ^
     -DCMAKE_BUILD_TYPE="Release"                                                    ^
-    -DCMAKE_INSTALL_PREFIX=%U_LIBRARY_PREFIX%                                       ^
+    -DCMAKE_INSTALL_PREFIX=%U_SRC_DIR%                                              ^
     -DWITH_EIGEN=1                                                                  ^
     -DBUILD_TESTS=0                                                                 ^
     -DBUILD_DOCS=0                                                                  ^
@@ -67,7 +69,19 @@ cmake .. -LAH -G "NMake Makefiles JOM"                                          
     -DPYTHON3_PACKAGES_PATH=%U_SRC_DIR%/py3/Lib/site-packages                       ^
     -DEXECUTABLE_OUTPUT_PATH=%U_LIBRARY_BIN%                                        ^
     -DLIBRARY_OUTPUT_PATH=%U_LIBRARY_BIN%                                           ^
+    -DOpenCV_INSTALL_BINARIES_PREFIX=                                               ^
     -DOPENCV_EXTRA_MODULES_PATH=%U_SRC_DIR%/opencv_contrib-%PKG_VERSION%/modules
 
 if errorlevel 1 exit 1
-cmake --build . --target all --config Release
+
+if not exist C:\Users\builder\opencv-temps mkdir C:\Users\builder\opencv-temps
+set > C:\Users\builder\opencv-temps\env.bld.bat
+
+:: Need to do this here :-(
+cmake --build . --target gen_opencv_python_source --config Release -- VERBOSE=1
+
+:: We cannot do the build here due to direct linking of DLLs into PREFIX.
+:: cmake --build . --target all --config Release -- VERBOSE=1 -j%CPU_COUNT%
+:: cmake --build . --target all --config Release -- -verbosity:detailed
+:: dir /s %LIBRARY_PREFIX%
+:: if errorlevel 1 exit 1
