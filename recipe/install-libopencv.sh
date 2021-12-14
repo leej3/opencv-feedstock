@@ -1,5 +1,5 @@
 #!/bin/bash
 
 pushd build
-  make install ${VERBOSE_CM}
+  cmake --install . ${VERBOSE_CM}
 popd
