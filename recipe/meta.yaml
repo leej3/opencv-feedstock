@@ -68,7 +68,7 @@ test:
     - test.cpp
   commands:
     - pushd test-cmake
-    - # set sysroot
+    # set sysroot
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON -G"Visual Studio 14 2015"        # [win32]
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON -G"Visual Studio 14 2015 Win64"  # [win64]
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON                                  # [not win]
