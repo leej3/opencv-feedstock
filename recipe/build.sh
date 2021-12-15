@@ -62,6 +62,14 @@ export CMAKE_SYSTEM_PREFIX_PATH=${SYS_PREFIX}
     -DWITH_VTK=OFF                                                          \
     -DWITH_GTK=OFF                                                          \
     -DWITH_LAPACK=OFF                                                       \
+    -DWITH_1394=OFF                                                         \
+    -DWITH_JASPER=OFF                                                       \
+    -DWITH_OPENCLAMDFFT=OFF                                                 \
+    -DWITH_OPENCLAMDBLAS=OFF                                                \
+    -DWITH_VA=OFF                                                           \
+    -DWITH_VA_INTEL=OFF                                                     \
+    -DWITH_PROTOBUF=OFF                                                     \
+    -DWITH_TESSERACT=OFF                                                    \
     -DINSTALL_C_EXAMPLES=OFF                                                \
     -DENABLE_CONFIG_VERIFICATION=ON                                         \
     "${PYTHON_CMAKE_ARGS[@]}"                                               \
