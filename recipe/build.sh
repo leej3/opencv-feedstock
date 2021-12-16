@@ -33,6 +33,7 @@ cd build
 export CMAKE_SYSTEM_PREFIX_PATH=${SYS_PREFIX}
   cmake .. -LAH                                                             \
     -GNinja                                                                 \
+    -DPYTHON_DEFAULT_EXECUTABLE=$(which python)                             \
     -DCMAKE_BUILD_TYPE="Release"                                            \
     -DCMAKE_INSTALL_PREFIX=${PREFIX}                                        \
     -DCMAKE_INSTALL_LIBDIR=lib                                              \
