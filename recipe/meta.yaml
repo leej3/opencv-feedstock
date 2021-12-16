@@ -28,31 +28,32 @@ build:
     - OPENCV_USE_N_PYTHON_PATCH
 
 requirements:
-  host:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+  build:
     - cmake
-    - eigen
-    - ffmpeg                # [not win]
-    - flake8                # [not win]
-    - freetype              # [not win]
     - git
-    - glib                  # [unix]
-    - harfbuzz              # [not win]
-    - hdf5                  # [unix]
-    - jasper                # [unix]
-    - jom                   # [win]
-    - openjpeg
-    - libpng
-    - libtiff
-    - libwebp
     - m2-filesystem         # [win]
     - m2w64-pkg-config      # [win]
     - msinttypes            # [win and py<35]
     - ninja                 # [unix]
+    - pkg-config            # [not win]
+    - jom                   # [win]
+  host:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - eigen
+    - ffmpeg                # [not win]
+    - flake8                # [not win]
+    - freetype              # [not win]
+    - glib                  # [unix]
+    - harfbuzz              # [not win]
+    - hdf5                  # [unix]
+    - jasper                # [unix]
+    - openjpeg
+    - libpng
+    - libtiff
+    - libwebp
     - numpy {{ numpy }}
     - openblas-devel
-    - pkg-config            # [not win]
     - pylint
     - python
     - qt
@@ -62,6 +63,8 @@ test:
   requires:
     - {{ compiler('cxx') }}
     - cmake
+    - python
+    - numpy
   files:
     - test-cmake/CMakeLists.txt
     - test-cmake/DisplayImage.cpp
