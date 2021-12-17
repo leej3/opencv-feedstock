@@ -47,9 +47,10 @@ requirements:
     - glib                  # [unix]
     - harfbuzz              # [not win]
     - hdf5                  # [unix]
-    - jasper                # [unix]
     - openjpeg
     - libpng
+    - libprotobuf=3.5.1
+    - libiconv
     - libtiff
     - libwebp
     - numpy {{ numpy }}
