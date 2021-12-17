@@ -4,8 +4,5 @@ ${CXX} $RECIPE_DIR/test.cpp -I$PREFIX/include/opencv4  -L$PREFIX/lib -o test
 
 if [ $($PYTHON -c 'import cv2; print(cv2.__version__)') == "$PKG_VERSION" ];then
     echo pass
-else
-    echo fail
-    exit 1
 fi
 

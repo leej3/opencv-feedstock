@@ -14,8 +14,10 @@ declare -a PYTHON_CMAKE_ARGS
 echo "PYTHON_CMAKE_ARGS="
 echo "${PYTHON_CMAKE_ARGS[@]}"
 
+# TODO: add if for architectures. ppc needs cmake_args to be set.
 declare -a CMAKE_EXTRA_ARGS
 export CXXFLAGS="$CXXFLAGS -D__STDC_CONSTANT_MACROS"
+# TODO: check if this is required
 export CPPFLAGS="${CPPFLAGS//-std=c++17/-std=c++11}"
 export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 
@@ -25,11 +27,31 @@ fi
 
 mkdir build
 cd build
+#TODO: check that libpng is found or use conda forge hack
 
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
 #export PKG_CONFIG_LIBDIR=$PREFIX/lib
-# export CMAKE_SYSTEM_PREFIX_PATH=${SYS_PREFIX}
-  cmake .. -LAH                                                             \
+export 
+
+  cmake .. -LAH \
+    "${CMAKE_EXTRA_ARGS[@]}"        `# append above`                                        \
+    "${PYTHON_CMAKE_ARGS[@]}"                                               \
+    -DCMAKE_BUILD_TYPE="Release"                                            \
+    -DCMAKE_CROSSCOMPILING=ON         `# may not need`                                      \
+    -DCMAKE_SKIP_RPATH=ON                                                   \
+    -DCMAKE_STRIP="${STRIP}"                                                \
+    -DCMAKE_SYSTEM_PREFIX_PATH=${PREFIX}                                    \
+    -DENABLE_CONFIG_VERIFICATION=ON                                         \
+    -DENABLE_FLAKE8=0                                                       \
+    -DENABLE_PYLINT=0      `# used for docs and examples`                   \
+    -DINSTALL_C_EXAMPLES=OFF                                                \
+    -DINSTALL_PYTHON_EXAMPLES=ON                                            \
+    -DOPENCV_DOWNLOAD_PATH="${SYS_PREFIX}"/conda-bld/src_cache              \
+    -DOPENCV_EXTRA_MODULES_PATH="../opencv_contrib-${PKG_VERSION}/modules"  \
+    -DOpenCV_INSTALL_BINARIES_PREFIX=""                                     \
+    -DPYTHON_DEFAULT_EXECUTABLE=$(which python)                             \
+    "${CMAKE_DEBUG_ARGS[@]}" `# append above`\
+    ${CMAKE_ARGS}                                                           \
     -GNinja                                                                 \
     -DBUILD_DOCS=0                                                          \
     -DBUILD_JASPER=0                                                        \
@@ -57,28 +79,11 @@ cd build
     -DWITH_OPENCLAMDFFT=OFF                                                 \
     -DWITH_OPENMP=1                                                         \
     -DWITH_OPENNI=OFF                                                       \
+    -DWITH_QT=ON              `# only shoudl be  on for intel arch`         \
     -DWITH_TESSERACT=OFF                                                    \
     -DWITH_VA=OFF                                                           \
     -DWITH_VA_INTEL=OFF                                                     \
-    -DWITH_VTK=OFF                                                          \
-    -DPYTHON_DEFAULT_EXECUTABLE=$(which python)                             \
-    -DCMAKE_CROSSCOMPILING=ON                                               \
-    -DCMAKE_BUILD_TYPE="Release"                                            \
-    -DCMAKE_INSTALL_PREFIX=${PREFIX}                                        \
-    -DCMAKE_INSTALL_LIBDIR=lib                                              \
-    -DOpenCV_INSTALL_BINARIES_PREFIX=""                                     \
-    -DCMAKE_SKIP_RPATH=ON                                                   \
-    -DCMAKE_STRIP="${STRIP}"                                                \
-    -DOPENCV_DOWNLOAD_PATH="${SYS_PREFIX}"/conda-bld/src_cache              \
-    -DINSTALL_C_EXAMPLES=OFF                                                \
-    -DENABLE_CONFIG_VERIFICATION=ON                                         \
-    "${PYTHON_CMAKE_ARGS[@]}"                                               \
-    -DINSTALL_PYTHON_EXAMPLES=ON                                            \
-    -DENABLE_PYLINT=0      `# used for docs and examples`                   \
-    -DENABLE_FLAKE8=0                                                       \
-    -DOPENCV_EXTRA_MODULES_PATH="../opencv_contrib-${PKG_VERSION}/modules"  \
-    "${CMAKE_EXTRA_ARGS[@]}"                                                \
-    "${CMAKE_DEBUG_ARGS[@]}"
+    -DWITH_VTK=OFF
 
   if [[ ! $? ]]; then
     echo "configure failed with $?"

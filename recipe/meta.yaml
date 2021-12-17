@@ -52,6 +52,24 @@ requirements:
     - python
     - qt                    # [not (osx or ppc64lei or s390x)]
     - zlib
+  run:
+    - eigen
+    - ffmpeg
+    - freetype
+    - glib
+    - harfbuzz              # [not win]
+    - hdf5
+    - openjpeg
+    - libpng
+    - libprotobuf=3.5.1
+    - libtiff
+    - libwebp
+    - numpy {{ numpy }}
+    - openblas-devel
+    - python
+    - qt                    # [not (osx or ppc64lei or s390x)]
+    - zlib
+
 
 test:
   requires:
