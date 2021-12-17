@@ -29,45 +29,51 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - cmake
     - msinttypes            # [win and py<35]
     - ninja
     - pkg-config
   host:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
     - eigen
     - ffmpeg
     - freetype
     - glib
     - harfbuzz              # [not win]
     - hdf5
+    - jpeg
     - openjpeg
     - libpng
-    - libprotobuf=3.5.1
+    - libprotobuf=3.5.1     # [not aarch64]
     - libtiff
     - libwebp
     - numpy {{ numpy }}
     - openblas-devel
     - python
-    - qt                    # [not (osx or ppc64lei or s390x)]
+    - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
   run:
+    - libgcc-ng
+    - libstdcxx-ng
     - eigen
     - ffmpeg
     - freetype
     - glib
+    - gst-plugins-base
+    - gstreamer
+    - jpeg
     - harfbuzz              # [not win]
     - hdf5
     - openjpeg
     - libpng
-    - libprotobuf=3.5.1
+    - libprotobuf=3.5.1     # [not aarch64]
     - libtiff
     - libwebp
     - numpy {{ numpy }}
     - openblas-devel
     - python
-    - qt                    # [not (osx or ppc64lei or s390x)]
+    - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
 
 
@@ -83,7 +89,6 @@ test:
     - test.cpp
   commands:
     - pushd test-cmake
-    # set sysroot
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON -G"Visual Studio 14 2015"        # [win32]
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON -G"Visual Studio 14 2015 Win64"  # [win64]
     - cmake . -DOpenCV_STATIC=OFF -DOpenCV_SHARED=ON                                  # [not win]

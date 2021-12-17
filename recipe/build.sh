@@ -31,16 +31,11 @@ cd build
 
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
 #export PKG_CONFIG_LIBDIR=$PREFIX/lib
-export 
-
   cmake .. -LAH \
-    "${CMAKE_EXTRA_ARGS[@]}"        `# append above`                                        \
+    "${CMAKE_EXTRA_ARGS[@]}"        `# append above`                        \
     "${PYTHON_CMAKE_ARGS[@]}"                                               \
     -DCMAKE_BUILD_TYPE="Release"                                            \
-    -DCMAKE_CROSSCOMPILING=ON         `# may not need`                                      \
-    -DCMAKE_SKIP_RPATH=ON                                                   \
-    -DCMAKE_STRIP="${STRIP}"                                                \
-    -DCMAKE_SYSTEM_PREFIX_PATH=${PREFIX}                                    \
+    -DCMAKE_CROSSCOMPILING=ON         `# may not need`                      \
     -DENABLE_CONFIG_VERIFICATION=ON                                         \
     -DENABLE_FLAKE8=0                                                       \
     -DENABLE_PYLINT=0      `# used for docs and examples`                   \
@@ -50,8 +45,12 @@ export
     -DOPENCV_EXTRA_MODULES_PATH="../opencv_contrib-${PKG_VERSION}/modules"  \
     -DOpenCV_INSTALL_BINARIES_PREFIX=""                                     \
     -DPYTHON_DEFAULT_EXECUTABLE=$(which python)                             \
-    "${CMAKE_DEBUG_ARGS[@]}" `# append above`\
-    ${CMAKE_ARGS}                                                           \
+    -DPROTOBUF_UPDATE_FILES=ON                                              \
+    "${CMAKE_DEBUG_ARGS[@]}" `# append above`                               \
+    -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=ONLY                                \
+    -DCMAKE_FIND_ROOT_PATH="${PREFIX};${BUILD_PREFIX};${CONDA_BUILD_SYSROOT}"\
+    -DCMAKE_INSTALL_PREFIX=${PREFIX}                                        \
+    -DCMAKE_INSTALL_REMOVE_ENVIRONMENT_RPATH=ON                             \
     -GNinja                                                                 \
     -DBUILD_DOCS=0                                                          \
     -DBUILD_JASPER=0                                                        \
@@ -65,12 +64,12 @@ export
     -DBUILD_TIFF=0                                                          \
     -DBUILD_ZLIB=0                                                          \
     -DBUILD_opencv_apps=OFF `# issue linking with opencv_model_diagnostics` \
-    -DUPDATE_PROTO_FILES=ON                                                 \
     -DWITH_1394=OFF                                                         \
     -DWITH_CUDA=OFF                                                         \
     -DWITH_EIGEN=1                                                          \
     -DWITH_FFMPEG=ON                                                        \
     -DWITH_GTK=OFF                                                          \
+    -DWITH_ITT=OFF                                                          \
     -DWITH_JASPER=OFF                                                       \
     -DWITH_LAPACK=OFF                                                       \
     -DWITH_MATLAB=OFF                                                       \
