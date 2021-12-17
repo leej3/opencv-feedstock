@@ -30,34 +30,27 @@ build:
 requirements:
   build:
     - cmake
-    - git
-    - m2-filesystem         # [win]
-    - m2w64-pkg-config      # [win]
     - msinttypes            # [win and py<35]
-    - ninja                 # [unix]
-    - pkg-config            # [not win]
-    - jom                   # [win]
+    - ninja
+    - pkg-config
   host:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - eigen
-    - ffmpeg                # [not win]
-    - flake8                # [not win]
-    - freetype              # [not win]
-    - glib                  # [unix]
+    - ffmpeg
+    - freetype
+    - glib
     - harfbuzz              # [not win]
-    - hdf5                  # [unix]
+    - hdf5
     - openjpeg
     - libpng
     - libprotobuf=3.5.1
-    - libiconv
     - libtiff
     - libwebp
     - numpy {{ numpy }}
     - openblas-devel
-    - pylint
     - python
-    - qt
+    - qt                    # [not (osx or ppc64lei or s390x)]
     - zlib
 
 test:

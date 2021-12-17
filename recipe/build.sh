@@ -27,8 +27,8 @@ mkdir build
 cd build
 
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
-export PKG_CONFIG_LIBDIR=$PREFIX/lib
-export CMAKE_SYSTEM_PREFIX_PATH=${SYS_PREFIX}
+#export PKG_CONFIG_LIBDIR=$PREFIX/lib
+# export CMAKE_SYSTEM_PREFIX_PATH=${SYS_PREFIX}
   cmake .. -LAH                                                             \
     -GNinja                                                                 \
     -DBUILD_DOCS=0                                                          \
