@@ -49,7 +49,7 @@ requirements:
     - libtiff
     - libwebp
     - numpy {{ numpy }}
-    - openblas-devel        # [not arm64]
+    - openblas-devel        # [not (ppc64le or arm64)]
     - python
     - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
@@ -64,13 +64,13 @@ requirements:
     - hdf5
     - jpeg
     - openjpeg
-    - libgomp               # [linux]
     - libpng
     - libprotobuf=3.5.1     # [x86_64]
     - libtiff
     - libwebp
     - numpy {{ numpy }}
-    - openblas-devel        # [not arm64]
+    - openblas-devel        # [not (ppc64le or arm64)]
+    - _openmp_mutex               # [linux]
     - python
     - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
