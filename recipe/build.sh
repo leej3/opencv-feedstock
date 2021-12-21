@@ -83,7 +83,6 @@ cmake .. -LAH -GNinja                                                     \
   -DENABLE_PYLINT=0      `# used for docs and examples`                   \
   -DINSTALL_C_EXAMPLES=OFF                                                \
   -DINSTALL_PYTHON_EXAMPLES=ON                                            \
-  -DOPENCV_DOWNLOAD_PATH="${SYS_PREFIX}"/conda-bld/src_cache              \
   -DOPENCV_EXTRA_MODULES_PATH="../opencv_contrib-${PKG_VERSION}/modules"  \
   -DOpenCV_INSTALL_BINARIES_PREFIX=""                                     \
   -DPROTOBUF_UPDATE_FILES=ON  `# should be used if using protobuf`        \
