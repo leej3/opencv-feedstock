@@ -54,7 +54,7 @@ echo "CMake_EXTRA_ARGS : ${CMAKE_EXTRA_ARGS[@]}"
 #export PKG_CONFIG_LIBDIR=$PREFIX/lib
 mkdir build
 cd build
-cmake .. -LAH GNinja                                                      \
+cmake .. -LAH -GNinja                                                     \
   "${CMAKE_EXTRA_ARGS[@]}" `#includes platform specific deps and options` \
   "${PYTHON_CMAKE_ARGS[@]}"                                               \
   -DBUILD_DOCS=0                                                          \
