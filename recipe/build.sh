@@ -27,9 +27,9 @@ echo "Platform: ${target_platform}"
 # TODO: add if for architectures. ppc needs cmake_args to be set.
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
-elif [[ ${target_platform} == x86_64 ]];then
+elif [[ ${target_platform} == linux-64 ]];then
   WITH_OPENBLAS=1
-  WITH_QT=1
+  WITH_QT=5
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
 elif [[ ${target_platform} == s390x ]];then
