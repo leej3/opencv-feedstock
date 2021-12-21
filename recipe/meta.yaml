@@ -56,6 +56,7 @@ requirements:
   run:
     - libgcc-ng # [not osx]
     - libstdcxx-ng # [not osx]
+    - llvm-openmp  # [osx]
     - eigen                 # [not s390x]
     - ffmpeg                # [not s390x]
     - freetype
@@ -72,7 +73,7 @@ requirements:
     - libwebp
     - numpy ={{ numpy }}
     - openblas-devel        # [not (ppc64le or arm64)]
-    - _openmp_mutex               # [x86_64]
+    - _openmp_mutex               # [x86_64 and not osx]
     - python
     - qt  =5.9.7          # [not (osx or ppc64le or s390x or aarch64)]
     - zlib

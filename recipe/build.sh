@@ -26,6 +26,7 @@ echo "Platform: ${target_platform}"
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
 elif [[ ${target_platform} == linux-64 ]];then
+  # TODO: remove aarch64
   WITH_OPENBLAS=1
   # yes this is the world we live in... the value is coerced to boolean but it
   # is also used to set the version of the QT cmake config file looked for
