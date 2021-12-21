@@ -18,25 +18,24 @@ echo "${PYTHON_CMAKE_ARGS[@]}"
 # This should match the meta.yaml deps section
 IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_OPENBLAS WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "1 1 0 0 0 0"
 
-# Capture cmake_args from build config yaml
-CBC_CMAKE_ARGS="${CMAKE_ARGS}"
 
-# Set some OS-specific vars
+# Assemble CMAKE_EXTRA_ARGS  with OS-specific settings
 declare -a CMAKE_EXTRA_ARGS
 echo "Platform: ${target_platform}"
-# TODO: add if for architectures. ppc needs cmake_args to be set.
+
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
 elif [[ ${target_platform} == linux-64 ]];then
   WITH_OPENBLAS=1
+  # yes this is the world we live in... the value is coerced to boolean but it
+  # is also used to set the version of the QT cmake config file looked for
   WITH_QT=5
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
 elif [[ ${target_platform} == s390x ]];then
-    WITH_EIGEN=0
-    WITH_FFMPEG=0
-elif [[ ${target_platform} == ppc64le ]];then
-    CMAKE_EXTRA_ARGS+=("${CMAKE_ARGS}")
+  WITH_EIGEN=0
+  WITH_FFMPEG=0
+#elif [[ ${target_platform} == ppc64le ]];then
 else
 # TODO: check if this is required
 export CXXFLAGS="$CXXFLAGS -D__STDC_CONSTANT_MACROS"
@@ -61,6 +60,7 @@ echo "CMake_EXTRA_ARGS : ${CMAKE_EXTRA_ARGS[@]}"
 mkdir -p build
 cd build
 cmake .. -LAH -GNinja                                                     \
+  ${CMAKE_ARGS}                                                           \
   "${CMAKE_EXTRA_ARGS[@]}" `#includes platform specific deps and options` \
   "${PYTHON_CMAKE_ARGS[@]}"                                               \
   -DBUILD_DOCS=0                                                          \
@@ -77,10 +77,6 @@ cmake .. -LAH -GNinja                                                     \
   -DBUILD_opencv_apps=OFF `# issue linking with opencv_model_diagnostics` \
   -DCMAKE_BUILD_TYPE="Release"                                            \
   -DCMAKE_CROSSCOMPILING=ON         `# may not need`                      \
-  -DCMAKE_FIND_ROOT_PATH="${PREFIX};${BUILD_PREFIX};${CONDA_BUILD_SYSROOT}"\
-  -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=ONLY                                \
-  -DCMAKE_INSTALL_PREFIX=${PREFIX}                                        \
-  -DCMAKE_SKIP_ENVIRONMENT_RPATH=ON                             \
   -DENABLE_CONFIG_VERIFICATION=ON                                         \
   -DENABLE_FLAKE8=0                                                       \
   -DENABLE_PYLINT=0      `# used for docs and examples`                   \
