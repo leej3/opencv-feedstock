@@ -54,10 +54,10 @@ requirements:
     - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
   run:
-    - libgcc-ng # [not arm64]
-    - libstdcxx-ng # [not arm64]
-    - eigen
-    - ffmpeg
+    - libgcc-ng # [not osx]
+    - libstdcxx-ng # [not osx]
+    - eigen                 # [not s390x]
+    - ffmpeg                # [not s390x]
     - freetype
     - glib
     - harfbuzz              # [not win]

@@ -15,20 +15,26 @@ echo "PYTHON_CMAKE_ARGS="
 echo "${PYTHON_CMAKE_ARGS[@]}"
 
 # Set defaults for dependencies that change across OSes
-IFS=" " read -r WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "0 0 0"
+# This should match the meta.yaml deps section
+IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_OPENBLAS WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "1 1 0 0 0 0"
 
 # Capture cmake_args from build config yaml
 CBC_CMAKE_ARGS="${CMAKE_ARGS}"
 
 # Set some OS-specific vars
 declare -a CMAKE_EXTRA_ARGS
+echo "Platform: ${target_platform}"
 # TODO: add if for architectures. ppc needs cmake_args to be set.
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
 elif [[ ${target_platform} == x86_64 ]];then
+  WITH_OPENBLAS=1
   WITH_QT=1
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
+elif [[ ${target_platform} == s390x ]];then
+    WITH_EIGEN=0
+    WITH_FFMPEG=0
 elif [[ ${target_platform} == ppc64le ]];then
     CMAKE_EXTRA_ARGS+=("${CMAKE_ARGS}")
 else
@@ -40,7 +46,7 @@ export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 fi
 
 # append dependencies to CMAKE_EXTRA_ARGS
-for dep in GSTREAMER PROTOBUF QT;do
+for dep in EIGEN FFMPEG GSTREAMER OPENBLAS PROTOBUF QT;do
     varname=WITH_${dep}
     CMAKE_EXTRA_ARGS+=("-D${varname}=${!varname}")
 done
@@ -86,8 +92,6 @@ cmake .. -LAH -GNinja                                                     \
   -DPROTOBUF_UPDATE_FILES=ON  `# should be used if using protobuf`        \
   -DWITH_1394=OFF                                                         \
   -DWITH_CUDA=OFF                                                         \
-  -DWITH_EIGEN=1                                                          \
-  -DWITH_FFMPEG=ON                                                        \
   -DWITH_GTK=OFF                                                          \
   -DWITH_ITT=OFF                                                          \
   -DWITH_JASPER=OFF                                                       \
