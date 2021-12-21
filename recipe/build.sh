@@ -52,7 +52,7 @@ echo "CMake_EXTRA_ARGS : ${CMAKE_EXTRA_ARGS[@]}"
 
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
 #export PKG_CONFIG_LIBDIR=$PREFIX/lib
-mkdir build
+mkdir -p build
 cd build
 cmake .. -LAH -GNinja                                                     \
   "${CMAKE_EXTRA_ARGS[@]}" `#includes platform specific deps and options` \

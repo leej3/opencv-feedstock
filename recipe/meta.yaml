@@ -64,6 +64,7 @@ requirements:
     - hdf5
     - jpeg
     - openjpeg
+    - libgomp               # [linux]
     - libpng
     - libprotobuf=3.5.1     # [x86_64]
     - libtiff
