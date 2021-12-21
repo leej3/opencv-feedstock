@@ -45,33 +45,31 @@ requirements:
     - jpeg
     - openjpeg
     - libpng
-    - libprotobuf=3.5.1     # [not aarch64]
+    - libprotobuf=3.5.1     # [x86_64]
     - libtiff
     - libwebp
     - numpy {{ numpy }}
-    - openblas-devel
+    - openblas-devel        # [not arm64]
     - python
     - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
   run:
-    - libgcc-ng
-    - libstdcxx-ng
+    - libgcc-ng # [not arm64]
+    - libstdcxx-ng # [not arm64]
     - eigen
     - ffmpeg
     - freetype
     - glib
-    - gst-plugins-base
-    - gstreamer
-    - jpeg
     - harfbuzz              # [not win]
     - hdf5
+    - jpeg
     - openjpeg
     - libpng
-    - libprotobuf=3.5.1     # [not aarch64]
+    - libprotobuf=3.5.1     # [x86_64]
     - libtiff
     - libwebp
     - numpy {{ numpy }}
-    - openblas-devel
+    - openblas-devel        # [not arm64]
     - python
     - qt                    # [not (osx or ppc64le or s390x)]
     - zlib
