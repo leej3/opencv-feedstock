@@ -80,7 +80,7 @@ cmake .. -LAH -GNinja                                                     \
   -DCMAKE_FIND_ROOT_PATH="${PREFIX};${BUILD_PREFIX};${CONDA_BUILD_SYSROOT}"\
   -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=ONLY                                \
   -DCMAKE_INSTALL_PREFIX=${PREFIX}                                        \
-  -DCMAKE_INSTALL_REMOVE_ENVIRONMENT_RPATH=ON                             \
+  -DCMAKE_SKIP_ENVIRONMENT_RPATH=ON                             \
   -DENABLE_CONFIG_VERIFICATION=ON                                         \
   -DENABLE_FLAKE8=0                                                       \
   -DENABLE_PYLINT=0      `# used for docs and examples`                   \
