@@ -51,12 +51,12 @@ requirements:
     - openjpeg
     - openblas-devel         # [x86_64]
     - libpng
-    - libprotobuf  =3.5.1     # [x86_64]
+    - libprotobuf  ==3.5.1     # [x86_64]
     - libtiff
     - libwebp
-    - numpy ={{ numpy }}
+    - numpy ==1.20.*
     - python
-    - qt =5.9.7                   # [not (osx or ppc64le or s390x)]
+    - qt ==5.9.7                   # [not (osx or ppc64le or s390x)]
     - zlib
   run:
     - libgcc-ng # [not osx]
@@ -73,13 +73,13 @@ requirements:
     - jpeg
     - openjpeg
     - libpng
-    - libprotobuf =3.5.1     # [x86_64]
+    - libprotobuf ==3.5.1     # [x86_64]
     - libtiff
     - libwebp
-    - numpy ={{ numpy }}
+    - numpy ==1.20.*
     - _openmp_mutex               # [x86_64 and not osx]
     - python
-    - qt  =5.9.7          # [not (osx or ppc64le or s390x or aarch64)]
+    - qt  ==5.9.7          # [not (osx or ppc64le or s390x or aarch64)]
     - zlib
 
 
