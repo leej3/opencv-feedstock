@@ -48,7 +48,7 @@ requirements:
     - libprotobuf  =3.5.1     # [x86_64]
     - libtiff
     - libwebp
-    - numpy {{ numpy }}
+    - numpy ={{ numpy }}
     - python
     - qt =5.9.7                   # [not (osx or ppc64le or s390x)]
     - zlib
