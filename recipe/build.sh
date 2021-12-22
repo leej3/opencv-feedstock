@@ -16,7 +16,7 @@ echo "${PYTHON_CMAKE_ARGS[@]}"
 
 # Set defaults for dependencies that change across OSes
 # This should match the meta.yaml deps section
-IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_OPENBLAS WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "1 1 0 0 0 0"
+IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "1 1 0 0 0 0"
 
 
 # Assemble CMAKE_EXTRA_ARGS  with OS-specific settings
@@ -26,8 +26,6 @@ echo "Platform: ${target_platform}"
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
 elif [[ ${target_platform} == linux-64 ]];then
-  # TODO: remove aarch64
-  WITH_OPENBLAS=1
   # yes this is the world we live in... the value is coerced to boolean but it
   # is also used to set the version of the QT cmake config file looked for
   WITH_QT=5
@@ -46,7 +44,7 @@ export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 fi
 
 # append dependencies to CMAKE_EXTRA_ARGS
-for dep in EIGEN FFMPEG GSTREAMER OPENBLAS PROTOBUF QT;do
+for dep in EIGEN FFMPEG GSTREAMER PROTOBUF QT;do
     varname=WITH_${dep}
     CMAKE_EXTRA_ARGS+=("-D${varname}=${!varname}")
 done
