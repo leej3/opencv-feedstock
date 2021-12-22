@@ -26,8 +26,11 @@ build:
   skip: True  # [win and py27]
   script_env:
     - OPENCV_USE_N_PYTHON_PATCH
+  missing_dso_whitelist:
+    - "*"
 
 requirements:
+
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
@@ -40,10 +43,13 @@ requirements:
     - ffmpeg
     - freetype
     - glib          #[x86_64]
+    - gst-plugins-base      # [x86_64]
+    - gstreamer             # [x86_64]
     - harfbuzz              # [not win]
     - hdf5
     - jpeg
     - openjpeg
+    - openblas-devel         # [x86_64]
     - libpng
     - libprotobuf  =3.5.1     # [x86_64]
     - libtiff
@@ -55,7 +61,7 @@ requirements:
   run:
     - libgcc-ng # [not osx]
     - libstdcxx-ng # [not osx]
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx and not arm64]
     - eigen                 # [not s390x]
     - ffmpeg                # [not s390x]
     - freetype

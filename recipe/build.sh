@@ -16,7 +16,7 @@ echo "${PYTHON_CMAKE_ARGS[@]}"
 
 # Set defaults for dependencies that change across OSes
 # This should match the meta.yaml deps section
-IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_PROTOBUF WITH_GSTREAMER WITH_QT <<< "1 1 0 0 0 0"
+IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_PROTOBUF WITH_GSTREAMER WITH_OPENMP WITH_QT <<< "1 1 0 0 0 1 0"
 
 
 # Assemble CMAKE_EXTRA_ARGS  with OS-specific settings
@@ -25,6 +25,8 @@ echo "Platform: ${target_platform}"
 
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
+  WITH_OPENMP=0
+  WITH_FFMPEG=0
 elif [[ ${target_platform} == linux-64 ]];then
   # yes this is the world we live in... the value is coerced to boolean but it
   # is also used to set the version of the QT cmake config file looked for
@@ -95,7 +97,6 @@ cmake .. -LAH -GNinja                                                     \
   -DWITH_OPENCL=OFF                                                       \
   -DWITH_OPENCLAMDBLAS=OFF                                                \
   -DWITH_OPENCLAMDFFT=OFF                                                 \
-  -DWITH_OPENMP=1                                                         \
   -DWITH_OPENNI=OFF                                                       \
   -DWITH_TESSERACT=OFF                                                    \
   -DWITH_VA=OFF                                                           \
