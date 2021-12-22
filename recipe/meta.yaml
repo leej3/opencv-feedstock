@@ -80,7 +80,6 @@ requirements:
     - qt  ==5.9.7           # [not (osx or ppc64le or s390x or aarch64)]
     - zlib
 
-
 test:
   requires:
     - {{ compiler('cxx') }}
