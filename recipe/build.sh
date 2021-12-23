@@ -40,10 +40,7 @@ elif [[ ${target_platform} == linux-64 ]];then
   WITH_QT=5
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
-elif [[ ${target_platform} == s390x ]];then
-  WITH_EIGEN=0
-  WITH_FFMPEG=0
-#elif [[ ${target_platform} == ppc64le ]];then
+#elif [[ ${target_platform} == linux-ppc64le ]];then
 else
     echo Unsupported platform
 fi
