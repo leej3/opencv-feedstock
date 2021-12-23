@@ -43,6 +43,8 @@ elif [[ ${target_platform} == linux-64 ]];then
 elif [[ ${target_platform} == linux-ppc64le ]];then
     # TODO: this should likely be somewhere else... perhaps the compiler activation
     CMAKE_ARGS=" -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_FIND_ROOT_PATH=$PREFIX;$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib"
+elif [[ ${target_platform} == linux-aarch64 ]];then
+    echo aarch64
 else
     echo Unsupported platform
 fi
@@ -55,8 +57,6 @@ done
 # append debug args
 CMAKE_EXTRA_ARGS+=("${CMAKE_DEBUG_ARGS[@]}")
 echo "CMake_EXTRA_ARGS : ${CMAKE_EXTRA_ARGS[@]}"
-
-#TODO: check that libpng is found or use conda forge hack
 
 #export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
 #export PKG_CONFIG_LIBDIR=$PREFIX/lib
