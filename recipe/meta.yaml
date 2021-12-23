@@ -44,8 +44,8 @@ requirements:
     - ffmpeg                # [not osx]
     - freetype
     - glib                  # [linux64]
-    - gst-plugins-base      # [x86_64]
-    - gstreamer             # [x86_64]
+    - gst-plugins-base      # [linux64]
+    - gstreamer             # [linux64]
     - harfbuzz              # [not win]
     - hdf5
     - jpeg
