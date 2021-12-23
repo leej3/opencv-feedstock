@@ -28,7 +28,7 @@ build:
     - OPENCV_USE_N_PYTHON_PATCH
   ignore_run_exports:
     - openblas-devel
-    - _openmp_mutex
+    - _openmp_mutex # [linux64 or aarch64]
 
 requirements:
 
@@ -61,7 +61,7 @@ requirements:
     - qt ==5.9.7            # [linux64]
     - zlib
   run:
-    - _openmp_mutex
+    - _openmp_mutex         # [linux64 or aarch64]
     - eigen
     - ffmpeg                # [not osx]
     - freetype
