@@ -40,7 +40,8 @@ elif [[ ${target_platform} == linux-64 ]];then
   WITH_QT=5
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
-#elif [[ ${target_platform} == linux-ppc64le ]];then
+elif [[ ${target_platform} == linux-ppc64le ]];then
+    echo ppc
 else
     echo Unsupported platform
 fi

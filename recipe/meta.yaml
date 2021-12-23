@@ -41,46 +41,46 @@ requirements:
   host:
     - cmake
     - eigen
-    - ffmpeg
+    - ffmpeg                # [not osx]
     - freetype
-    - glib                  #[x86_64]
+    - glib                  # [linux64]
     - gst-plugins-base      # [x86_64]
     - gstreamer             # [x86_64]
     - harfbuzz              # [not win]
     - hdf5
     - jpeg
-    - openjpeg
+    - openjpeg              # [not arm64]
     - openblas-devel        # [x86_64]
     - libpng
     - libprotobuf  ==3.5.1  # [x86_64]
     - libtiff
-    - libwebp
+    - libwebp               # [not osx]
     - numpy ==1.20.*        # [not arm64]
     - numpy ==1.21.*        # [arm64]
     - python
-    - qt ==5.9.7            # [not (osx or ppc64le or s390x)]
+    - qt ==5.9.7            # [not (osx or ppc64le)]
     - zlib
   run:
-    - _openmp_mutex           # [x86_64 and not osx]
-    - eigen                 # [not s390x]
-    - ffmpeg                # [not s390x]
+    - _openmp_mutex         # [x86_64 and not osx]
+    - eigen
+    - ffmpeg                # [not osx]
     - freetype
-    - glib                  #[x86_64]
-    - gstreamer             #[x86_64]
-    - gst-plugins-base      #[x86_64]
+    - glib                  # [linux64]
+    - gstreamer             # [linux64]
+    - gst-plugins-base      # [linux64]
     - harfbuzz              # [not win]
     - hdf5
     - jpeg
-    - openjpeg
+    - openjpeg              # [not arm64]
     - libopenblas           # [x86_64]
     - libpng
     - libprotobuf ==3.5.1   # [x86_64]
     - libtiff
-    - libwebp
+    - libwebp               # [not osx]
     - numpy ==1.20.*        # [not arm64]
     - numpy ==1.21.*        # [arm64]
     - python
-    - qt  ==5.9.7           # [not (osx or ppc64le or s390x or aarch64)]
+    - qt  ==5.9.7           # [not (osx or ppc64le or aarch64)]
     - zlib
 
 test:
