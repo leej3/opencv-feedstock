@@ -41,7 +41,8 @@ elif [[ ${target_platform} == linux-64 ]];then
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
 elif [[ ${target_platform} == linux-ppc64le ]];then
-    echo ppc
+    # TODO: this should likely be somewhere else... perhaps the compiler activation
+    CMAKE_ARGS=" -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_FIND_ROOT_PATH=$PREFIX;$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib"
 else
     echo Unsupported platform
 fi
