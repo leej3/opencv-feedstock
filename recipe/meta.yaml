@@ -55,7 +55,8 @@ requirements:
     - libprotobuf  ==3.5.1  # [x86_64]
     - libtiff
     - libwebp
-    - numpy ==1.20.*
+    - numpy ==1.20.*        # [not arm64]
+    - numpy ==1.21.*        # [arm64]
     - python
     - qt ==5.9.7            # [not (osx or ppc64le or s390x)]
     - zlib
@@ -76,7 +77,8 @@ requirements:
     - libprotobuf ==3.5.1   # [x86_64]
     - libtiff
     - libwebp
-    - numpy ==1.20.*
+    - numpy ==1.20.*        # [not arm64]
+    - numpy ==1.21.*        # [arm64]
     - python
     - qt  ==5.9.7           # [not (osx or ppc64le or s390x or aarch64)]
     - zlib
