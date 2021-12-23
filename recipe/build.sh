@@ -3,6 +3,11 @@
 DEBUG_CMAKE_BUILD_SYSTEM=yes
 declare -a CMAKE_DEBUG_ARGS PYTHON_CMAKE_ARGS VAR_DEPS DEPS_DEFAULTS CMAKE_EXTRA_ARGS
 
+# C11 should be what is supported by default
+export CXXFLAGS="$CXXFLAGS -D__STDC_CONSTANT_MACROS"
+export CPPFLAGS="${CPPFLAGS//-std=c++17/-std=c++11}"
+export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
+
 if [[ ${DEBUG_CMAKE_BUILD_SYSTEM} == yes ]]; then
 #  CMAKE_DEBUG_ARGS+=("--debug-trycompile")
 #  CMAKE_DEBUG_ARGS+=("-Wdev")
@@ -30,8 +35,8 @@ if [[ ${target_platform} == osx-* ]]; then
   WITH_OPENMP=0
   WITH_FFMPEG=0
 elif [[ ${target_platform} == linux-64 ]];then
-  # yes this is the world we live in... the value is coerced to boolean but it
-  # is also used to set the version of the QT cmake config file looked for
+  # for qt the value is coerced to boolean but it also used to set the version
+  # of the QT cmake config file looked for
   WITH_QT=5
   WITH_GSTREAMER=1
   WITH_PROTOBUF=1
@@ -40,11 +45,7 @@ elif [[ ${target_platform} == s390x ]];then
   WITH_FFMPEG=0
 #elif [[ ${target_platform} == ppc64le ]];then
 else
-# TODO: check if this is required
-export CXXFLAGS="$CXXFLAGS -D__STDC_CONSTANT_MACROS"
-
-export CPPFLAGS="${CPPFLAGS//-std=c++17/-std=c++11}"
-export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
+    echo Unsupported platform
 fi
 
 # append dependencies to CMAKE_EXTRA_ARGS
