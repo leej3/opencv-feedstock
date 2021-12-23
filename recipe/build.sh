@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DEBUG_CMAKE_BUILD_SYSTEM=yes
-declare -a CMAKE_DEBUG_ARGS
+declare -a CMAKE_DEBUG_ARGS PYTHON_CMAKE_ARGS VAR_DEPS DEPS_DEFAULTS CMAKE_EXTRA_ARGS
+
 if [[ ${DEBUG_CMAKE_BUILD_SYSTEM} == yes ]]; then
 #  CMAKE_DEBUG_ARGS+=("--debug-trycompile")
 #  CMAKE_DEBUG_ARGS+=("-Wdev")
@@ -10,19 +11,20 @@ if [[ ${DEBUG_CMAKE_BUILD_SYSTEM} == yes ]]; then
   CMAKE_DEBUG_ARGS+=("-DOPENCV_CMAKE_DEBUG_MESSAGES=1")
 fi
 
-declare -a PYTHON_CMAKE_ARGS
 echo "PYTHON_CMAKE_ARGS="
 echo "${PYTHON_CMAKE_ARGS[@]}"
 
 # Set defaults for dependencies that change across OSes
 # This should match the meta.yaml deps section
-IFS=" " read -r WITH_EIGEN WITH_FFMPEG WITH_PROTOBUF WITH_GSTREAMER WITH_OPENMP WITH_QT <<< "1 1 0 0 0 1 0"
-
+VAR_DEPS=(EIGEN FFMPEG PROTOBUF GSTREAMER OPENMP QT)
+DEPS_DEFAULTS=(1 1 0 0 1 0)
+if [[ ${#DEPS_DEFAULTS[@]} != ${#VAR_DEPS[@]} ]];then echo Setting defaults failed: Length mismatch;exit 1; fi
+for ii in ${!VAR_DEPS[@]};do
+    eval "WITH_${VAR_DEPS[ii]}=${DEPS_DEFAULTS[ii]}"
+done
 
 # Assemble CMAKE_EXTRA_ARGS  with OS-specific settings
-declare -a CMAKE_EXTRA_ARGS
 echo "Platform: ${target_platform}"
-
 if [[ ${target_platform} == osx-* ]]; then
   CMAKE_EXTRA_ARGS+=("-DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT}")
   WITH_OPENMP=0
@@ -46,7 +48,7 @@ export CXXFLAGS="${CXXFLAGS//-std=c++17/-std=c++11}"
 fi
 
 # append dependencies to CMAKE_EXTRA_ARGS
-for dep in EIGEN FFMPEG GSTREAMER PROTOBUF QT;do
+for dep in "${VAR_DEPS[@]}";do
     varname=WITH_${dep}
     CMAKE_EXTRA_ARGS+=("-D${varname}=${!varname}")
 done
