@@ -57,7 +57,8 @@ requirements:
     - libwebp               # [not osx]
     - numpy {{ numpy }}
     - python
-    - qt ==5.9.7            # [linux64]
+    - qt ==5.9.7            # [x86_64 and not ppc64le]
+    - qt ==5.15.2            # [arm64 or aarch64]
     - zlib
   run:
     - _openmp_mutex         # [linux64 or aarch64]
