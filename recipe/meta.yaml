@@ -1,7 +1,7 @@
 {% set version = "4.5.4" %}
 {% set use_n_python_patch = os.environ.get('OPENCV_USE_N_PYTHON_PATCH', '0') %}
 package:
-  name: opencv-suite
+  name: opencv
   version: {{ version }}
 
 source:
